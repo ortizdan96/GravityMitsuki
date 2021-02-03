@@ -1,0 +1,132 @@
+/**
+This code is like floppy bird
+Mitsuki bounces off the bottom of the dispay and moves with right-clicking the mouse.
+*/
+boolean click = false;
+float white = 255;
+float mitsukiX = 250;
+float mitsukiY = 100;
+float eyeSize = 25; //Size of eyes
+float faceW = 130; //Width and Height of Face
+float faceH = 100;
+float bodyW = 50; //Width and Height of Body
+float bodyH = 70;
+float speedX = 2; //Speed moving across x axis 
+float speedY = 0;
+float gravity = 0.1;
+float bodyR;
+float bodyG;
+float bodyB;
+float eyeR;
+float eyeG;
+float eyeB;
+float faceR;
+float faceG;
+float faceB;
+
+void setup()
+  {
+    size(1500,700);
+  }
+void draw()
+  {
+    background(white);
+    
+    //Code for Mitsuki face
+    stroke(0);
+    fill(faceR,faceG,faceB); //Light green color fill
+    rect(mitsukiX-faceW/2,mitsukiY-faceH/2+5,faceW,faceH);
+    
+    //Code for Mitsuki eyes
+    stroke(0);
+    fill(eyeR,eyeG,eyeB);
+    ellipse(mitsukiX-eyeSize-10,mitsukiY,eyeSize,eyeSize);
+    ellipse(mitsukiX+eyeSize+10,mitsukiY,eyeSize,eyeSize);
+
+    //Code for Mitsuki mouth
+    stroke(0);
+    line(mitsukiX-faceW/3+30,mitsukiY+faceH/3,mitsukiX+faceW/3-30,mitsukiY+faceH/3);
+    
+    //Code for Mitsuki body
+    stroke(0);
+    fill(bodyR,bodyG,bodyB); //Light green color fill
+    rect(mitsukiX-bodyW/2,mitsukiY+bodyH-15,bodyW,bodyH);
+        
+    //Code for Mitsuki arms
+    line(mitsukiX-bodyW/2-30,mitsukiY+bodyH/2+50,mitsukiX-bodyW/2,mitsukiY+bodyH/2+50);
+    line(mitsukiX+bodyW/2,mitsukiY+bodyH/2+50,mitsukiX+bodyW/2+30,mitsukiY+bodyH/2+50);
+    
+    mitsukiY += speedY; //Code for falling with gravity
+    speedY += gravity;
+    if(mitsukiY > height-120){ //Gravity code for bouncing
+      speedY *= -0.95;
+      mitsukiY = height-120; //Code to make sure doesnt get stuck to bottom display
+    }
+    
+    if(mitsukiX > width||mitsukiX < 0){ //Code to bounce back from the max width of display
+      speedX *= -1;
+    }
+    
+    if(mitsukiY < 20){ //Code to apply gravity if reached max height of display
+      mitsukiY = 20;
+      mitsukiY += speedY;
+      speedY += gravity;
+    }
+    
+    if(click){ //Code if mouse clicked Mitsuki starts moving on the accross the x axis
+      mitsukiX += speedX;
+   }
+   
+   if(mitsukiX < width/2 && mitsukiY < height/4){ //Code if Mitsuki is at top left half of display eyes change colol
+     faceR = 0;
+     faceG = 255;
+     faceB = 0;
+     eyeR = 180;
+     eyeG = 30;
+     eyeB =random(255);
+     bodyR = 0;
+     bodyG = 255;
+     bodyB = 0;
+   }
+   if(mitsukiX > width/2 && mitsukiY < height/4+75){ //Code if Mitsuki is top right half of display eyes and body change color
+     faceR = 0;
+     faceG = 255;
+     faceB = 0;
+     eyeR = 180;
+     eyeG = 30;
+     eyeB =random(255);
+     bodyR = random(255);
+     bodyG = 28;
+     bodyB = 190;
+   }
+   if(mitsukiY > height/4+75){ //Code if Mitsuki is middle of display body and face change color
+     faceR = 26;
+     faceG = random(255);
+     faceB = 193;
+     bodyR = 26;
+     bodyG = random(255);
+     bodyB = 193;
+     eyeR = 0;
+     eyeG = 0;
+     eyeB = 0;
+   }
+   if(mitsukiY > height/2+150){ //Code if Mitsuki is bottom of display body back to normal
+     faceR = 0;
+     faceG = 255;
+     faceB = 0;
+     bodyR = 0;
+     bodyG = 255;
+     bodyB = 0;
+     eyeR = 0;
+     eyeG = 0;
+     eyeB = 0;
+   }
+   
+  }   
+void mousePressed()//Codes to run if mouse pressed
+  {
+   if(mousePressed){
+     speedY *= -1.2; //Code if mouse pressed add -1.2 to speedY to keep Mitsuki bouncing
+     click = true; //Code if mouse pressed run click if statment
+   }
+  }
